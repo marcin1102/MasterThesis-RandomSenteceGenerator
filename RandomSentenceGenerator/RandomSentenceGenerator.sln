@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2048
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomSentenceGenerator", "RandomSentenceGenerator\RandomSentenceGenerator.csproj", "{1923746E-DB0A-47F2-A104-145F2EE3C072}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1923746E-DB0A-47F2-A104-145F2EE3C072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1923746E-DB0A-47F2-A104-145F2EE3C072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1923746E-DB0A-47F2-A104-145F2EE3C072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1923746E-DB0A-47F2-A104-145F2EE3C072}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47D294E9-0FD2-458B-8DC5-80BE9E96DCE6}
+	EndGlobalSection
+EndGlobal
