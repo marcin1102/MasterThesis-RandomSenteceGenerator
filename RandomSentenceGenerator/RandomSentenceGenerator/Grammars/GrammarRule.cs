@@ -1,38 +1,29 @@
-﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
-
-namespace RandomSentenceGenerator.Grammars
+﻿namespace RandomSentenceGenerator.Grammars
 {
     public interface ISymbol
     {
+        string Name { get; }
     }
 
     public struct NonTerminal : ISymbol
     {
-        public NonTerminal(string value) : this()
+        public NonTerminal(string name) : this()
         {
-            Value = value;
+            Name = name;
         }
 
-        public string Value { get; }
-
-        //public override bool Equals(object obj)
-        //{
-        //    if (obj is NonTerminal nonTerminal)
-        //        return Value == nonTerminal.Value;
-        //    return false;
-        //}
-
-        //public override
+        public string Name { get; }
     }
 
     public struct Terminal : ISymbol
     {
-        public Terminal(string regexRule) : this()
+        public Terminal(string name, string regexRule) : this()
         {
+            Name = name;
             RegexRule = regexRule;
         }
 
+        public string Name { get; }
         public string RegexRule { get; }
     }
 }

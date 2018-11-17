@@ -21,7 +21,7 @@ namespace RandomSentenceGenerator
             var startingSymbol = grammar.HeadSymbols.ElementAt(startingRuleIndex);
 
             var sequence = new List<Terminal>();
-            GetSymbolSequence(startingSymbol, grammar, ref sequence);
+            GetSymbolSequence(startingSymbol, grammar, ref sequence, 0);
 
             var sb = new StringBuilder();
             foreach (var symbol in sequence)
@@ -33,7 +33,7 @@ namespace RandomSentenceGenerator
             return sb.ToString();
         }
 
-        private void GetSymbolSequence(ISymbol startingSymbol, Grammar grammar, ref List<Terminal> sequence)
+        private void GetSymbolSequence(ISymbol startingSymbol, Grammar grammar, ref List<Terminal> sequence, byte depth)
         {
             if(startingSymbol is Terminal terminal)
             {
@@ -46,10 +46,17 @@ namespace RandomSentenceGenerator
             var rulesCount = rules.Count;
             var randomRuleIndex = random.Next(rulesCount);
             var rule = rules.ElementAt(randomRuleIndex);
+            var containsSameSymbol = rule.Contains(startingSymbol);
+            while (depth > 10 && containsSameSymbol)
+            {
+                randomRuleIndex = random.Next(rulesCount);
+                rule = rules.ElementAt(randomRuleIndex);
+                containsSameSymbol = rule.Contains(startingSymbol);
+            }
                 
             foreach (var symbol in rule)
             {
-                GetSymbolSequence(symbol, grammar, ref sequence);
+                GetSymbolSequence(symbol, grammar, ref sequence, ++depth);
             }
         }
     }

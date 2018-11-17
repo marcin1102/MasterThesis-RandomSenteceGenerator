@@ -19,7 +19,7 @@ namespace RandomSentenceGenerator
             try
             {
                 var loadedContent = File.ReadAllLines(fileName);
-                content = loadedContent.SelectMany(x => x).ToString();
+                content = string.Join('\n', loadedContent);
                 return true;
             }
             catch (FileNotFoundException ex)
