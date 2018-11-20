@@ -1,4 +1,4 @@
-﻿namespace RandomSentenceGenerator
+﻿namespace RandomSentenceGenerator.Infrastructure
 {
     public static class GeneratorParameters
     {

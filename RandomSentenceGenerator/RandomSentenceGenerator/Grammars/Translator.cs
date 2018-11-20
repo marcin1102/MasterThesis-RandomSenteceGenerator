@@ -1,11 +1,9 @@
-﻿using RandomSentenceGenerator.Grammars;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace RandomSentenceGenerator
+namespace RandomSentenceGenerator.Grammars
 {
-    public class FileTranslator
+    public class Translator
     {
         public List<Terminal> ToTerminals(string fileName, string fileContent)
         {
@@ -33,7 +31,9 @@ namespace RandomSentenceGenerator
             List<List<ISymbol>> rules = new List<List<ISymbol>>();
             foreach (var rule in grammarRules)
             {
-                if (rule.Contains(":"))
+                if (rule == string.Empty || rule == ";")
+                    continue;
+                else if (rule.Contains(":"))
                 {
                     var splitedRule = rule.Split(":");
                     var nonTerminal = new NonTerminal(splitedRule[0]);
@@ -54,11 +54,12 @@ namespace RandomSentenceGenerator
                             inlineRule.Add(supposedTerminal);
                             continue;
                         }
-                    
-                        if(leftSideSymbol.Contains("'") && leftSideSymbol.Contains("'"))
+
+                        if (leftSideSymbol.Contains("'") && leftSideSymbol.Contains("'"))
                         {
-                            supposedTerminal = terminals.FirstOrDefault(x => x.Name == "*yytext");
-                            if(!supposedTerminal.Equals(default(Terminal)))
+                            var name = leftSideSymbol.Replace("'","");
+                            supposedTerminal = terminals.FirstOrDefault(x => x.Name == name);
+                            if (!supposedTerminal.Equals(default(Terminal)))
                             {
                                 inlineRule.Add(supposedTerminal);
                                 continue;
@@ -70,8 +71,6 @@ namespace RandomSentenceGenerator
                     rules.Add(inlineRule);
                     grammar.Add(nonTerminal, rules);
                 }
-                else if (rule == ";")
-                    continue;
                 else
                 {
                     var leftSideSymbols = rule.Replace("|", "").TrimStart().Split(" ");
@@ -125,9 +124,18 @@ namespace RandomSentenceGenerator
                 if (string.IsNullOrWhiteSpace(rule) || !rule.Contains("return"))
                     continue;
                 var terminalName = rule.Split("return")[1].Split(";")[0].Trim();
-                var regex = rule.Split("{")[0].Trim();
+                var regex = rule.Split(" ")[0].Trim();
                 terminals.Add(new Terminal(terminalName, regex));
             }
+
+            var textTerminals = terminals.Where(x => x.Name.Contains("*yytext")).ToList();
+            foreach (var text in textTerminals)
+            {
+                var charArray = text.RegexRule.ToCharArray();
+                terminals.AddRange(charArray.Select(x => new Terminal(x.ToString(), x.ToString())));
+                terminals.Remove(text);
+            }
+
             return terminals;
         }
     }

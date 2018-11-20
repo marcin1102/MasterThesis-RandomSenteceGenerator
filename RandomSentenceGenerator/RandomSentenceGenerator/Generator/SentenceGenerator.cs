@@ -1,13 +1,10 @@
-﻿using RandomSentenceGenerator.Generator;
-using RandomSentenceGenerator.Grammars;
-using RandomSentenceGenerator.Infrastructure;
+﻿using RandomSentenceGenerator.Grammars;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace RandomSentenceGenerator
+namespace RandomSentenceGenerator.Generator
 {
     public class SentenceGenerator
     {
@@ -47,7 +44,7 @@ namespace RandomSentenceGenerator
             var randomRuleIndex = random.Next(rulesCount);
             var rule = rules.ElementAt(randomRuleIndex);
             var containsSameSymbol = rule.Contains(startingSymbol);
-            while (depth > 10 && containsSameSymbol)
+            while (depth > 2 && containsSameSymbol)
             {
                 randomRuleIndex = random.Next(rulesCount);
                 rule = rules.ElementAt(randomRuleIndex);

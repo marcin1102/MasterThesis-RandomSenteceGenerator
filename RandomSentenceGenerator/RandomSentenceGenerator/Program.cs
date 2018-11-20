@@ -1,9 +1,9 @@
-﻿using Fare;
-using NDesk.Options;
+﻿using NDesk.Options;
+using RandomSentenceGenerator.Files;
+using RandomSentenceGenerator.Generator;
 using RandomSentenceGenerator.Grammars;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace RandomSentenceGenerator
 {
@@ -13,22 +13,6 @@ namespace RandomSentenceGenerator
         
         static void Main(string[] args)
         {
-            //var glowa = new NonTerminal("S");
-            //var rules = new List<List<ISymbol>>();
-            //rules.Add(new List<ISymbol> { new Terminal("(int|char|double)"), new Terminal("[a-zA-Z_]+[0-9]*"), new Terminal(";")});
-            //rules.Add(new List<ISymbol> { new Terminal("(int|char|double)"), new Terminal("[a-zA-Z_]+[0-9]*"),
-            //    new Terminal("="), new Terminal("[0-9]+"), new Terminal(";")});
-            //var dict = new Dictionary<NonTerminal, List<List<ISymbol>>>();
-            //dict.Add(glowa, new List<List<ISymbol>> { new List<ISymbol> { new NonTerminal("DEKLARACJA") } });
-            //dict.Add(new NonTerminal("DEKLARACJA"), rules);
-            //var grammar = new Grammar(new List<ISymbol>() { glowa }, dict);
-
-            //var generator = new SentenceGenerator();
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    Console.WriteLine(generator.GetCorrectSentence(grammar));
-            //}
-
             string grammarFileName = null;
             string lekserFileName = null;
             bool help = false;
@@ -65,19 +49,18 @@ namespace RandomSentenceGenerator
             if (!fileLoaded)
                 return;
 
-            var fileTranslator = new FileTranslator();
+            var fileTranslator = new Translator();
             var terminals = fileTranslator.ToTerminals(lekserFileName, lekserFileContent);
             var grammar = fileTranslator.ToGrammar(grammarFileName, grammarFileContent, terminals);
 
 
             var generator = new SentenceGenerator();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 1; i++)
             {
                 Console.WriteLine(generator.GetCorrectSentence(grammar));
             }
 
             Console.WriteLine("TODO: ");
-
         }
 
         private static void ShowHelp()
